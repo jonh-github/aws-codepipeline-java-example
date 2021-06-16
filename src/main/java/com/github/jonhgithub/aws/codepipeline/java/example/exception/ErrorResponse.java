@@ -7,5 +7,5 @@ import lombok.Data;
 @Data
 public class ErrorResponse {
 
-    private List<Error> errors = new ArrayList<>();
+  private List<Error> errors = new ArrayList<>();
 }

@@ -14,41 +14,42 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class ExceptionHandlerController {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public Mono<ErrorResponse> onResourceFound(ResourceNotFoundException exception) {
-        log.error("No resource found exception occurred: {} ", exception.getMessage());
+  @ExceptionHandler(ResourceNotFoundException.class)
+  @ResponseStatus(value = HttpStatus.NOT_FOUND)
+  @ResponseBody
+  public Mono<ErrorResponse> onResourceFound(ResourceNotFoundException exception) {
+    log.error("No resource found exception occurred: {} ", exception.getMessage());
 
-        ErrorResponse response = new ErrorResponse();
-        response.getErrors().add(
-            new Error(
-                HttpStatus.NOT_FOUND.value(),
-                "Resource not found",
-                exception.getMessage()));
+    ErrorResponse response = new ErrorResponse();
+    response
+        .getErrors()
+        .add(new Error(HttpStatus.NOT_FOUND.value(), "Resource not found", exception.getMessage()));
 
-        return Mono.just(response);
+    return Mono.just(response);
+  }
+
+  /**
+   * Handle request Validation failures
+   *
+   * @param e
+   * @return errorResponse
+   */
+  @ExceptionHandler(WebExchangeBindException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ResponseBody
+  public Mono<ErrorResponse> onValidationException(WebExchangeBindException e) {
+    log.error("Validation exception occurred", e);
+
+    ErrorResponse error = new ErrorResponse();
+    for (ObjectError objectError : e.getAllErrors()) {
+      error
+          .getErrors()
+          .add(
+              new Error(
+                  HttpStatus.BAD_REQUEST.value(),
+                  "Invalid Request",
+                  objectError.getDefaultMessage()));
     }
-
-    /**
-     * Handle request Validation failures
-     * @param e
-     * @return errorResponse
-     */
-    @ExceptionHandler(WebExchangeBindException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public Mono<ErrorResponse> onValidationException(WebExchangeBindException e) {
-        log.error("Validation exception occurred", e);
-
-        ErrorResponse error = new ErrorResponse();
-        for (ObjectError objectError : e.getAllErrors()) {
-            error.getErrors().add(
-                new Error(
-                    HttpStatus.BAD_REQUEST.value(),
-                    "Invalid Request",
-                    objectError.getDefaultMessage()));
-        }
-        return Mono.just(error);
-    }
+    return Mono.just(error);
+  }
 }

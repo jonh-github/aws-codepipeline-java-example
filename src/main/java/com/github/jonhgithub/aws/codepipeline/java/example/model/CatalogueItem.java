@@ -16,43 +16,39 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("CATALOGUE_ITEMS")
 public class CatalogueItem {
 
-    @Id
-    @Column("ID")
-    private Long id;
+  @Id
+  @Column("ID")
+  private Long id;
 
-    @NotEmpty(message = "Name cannot be null or empty")
-    @NonNull
-    @Column("ITEM_NAME")
-    private String name;
+  @NotEmpty(message = "Name cannot be null or empty")
+  @NonNull
+  @Column("ITEM_NAME")
+  private String name;
 
-    @NotEmpty(message = "Description cannot be null or empty")
-    @NonNull
-    @Column("DESCRIPTION")
-    private String description;
+  @NotEmpty(message = "Description cannot be null or empty")
+  @NonNull
+  @Column("DESCRIPTION")
+  private String description;
 
-    @NonNull
-    @Column("CATEGORY")
-    @IEnumValidator(
-        enumClazz = Category.class,
-        message = "Invalid category provided"
-    )
-    private String category;
+  @NonNull
+  @Column("CATEGORY")
+  @IEnumValidator(enumClazz = Category.class, message = "Invalid category provided")
+  private String category;
 
-    @NotNull(message = "Price cannot be null or empty")
-    @NonNull
-    @Column("PRICE")
-    private Double price;
+  @NotNull(message = "Price cannot be null or empty")
+  @NonNull
+  @Column("PRICE")
+  private Double price;
 
-    @NotNull(message = "Inventory cannot be null or empty")
-    @NonNull
-    @Column("INVENTORY")
-    private Integer inventory;
+  @NotNull(message = "Inventory cannot be null or empty")
+  @NonNull
+  @Column("INVENTORY")
+  private Integer inventory;
 
-    @NonNull
-    @Column("CREATED_ON")
-    private Instant createdOn;
+  @NonNull
+  @Column("CREATED_ON")
+  private Instant createdOn;
 
-    @Column("UPDATED_ON")
-    private Instant updatedOn;
-
+  @Column("UPDATED_ON")
+  private Instant updatedOn;
 }

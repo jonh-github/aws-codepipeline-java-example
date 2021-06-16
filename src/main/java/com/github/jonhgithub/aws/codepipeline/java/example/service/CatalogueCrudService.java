@@ -19,59 +19,60 @@ import reactor.core.publisher.Mono;
 @Service
 public class CatalogueCrudService {
 
-    private final CatalogueRepository catalogueRepository;
+  private final CatalogueRepository catalogueRepository;
 
-    CatalogueCrudService(CatalogueRepository catalogueRepository) {
-        this.catalogueRepository = catalogueRepository;
-    }
+  CatalogueCrudService(CatalogueRepository catalogueRepository) {
+    this.catalogueRepository = catalogueRepository;
+  }
 
-    public Flux<CatalogueItem> getCatalogueItems() {
-        Sort sort = Sort.by(Sort.Direction.ASC, "name");
+  public Flux<CatalogueItem> getCatalogueItems() {
+    Sort sort = Sort.by(Sort.Direction.ASC, "name");
 
-        return catalogueRepository.findAll(sort);
-    }
+    return catalogueRepository.findAll(sort);
+  }
 
-    public Mono<CatalogueItem> getCatalogueItem(Long id) throws ResourceNotFoundException {
-        return getCatalogueItemById(id);
-    }
+  public Mono<CatalogueItem> getCatalogueItem(Long id) throws ResourceNotFoundException {
+    return getCatalogueItemById(id);
+  }
 
-    public Mono<Long> addCatalogItem(CatalogueItem catalogueItem) {
-        catalogueItem.setCreatedOn(Instant.now());
+  public Mono<Long> addCatalogItem(CatalogueItem catalogueItem) {
+    catalogueItem.setCreatedOn(Instant.now());
 
-        return
-            catalogueRepository
-                .save(catalogueItem)
-                .flatMap(item -> Mono.just(item.getId()));
-    }
+    return catalogueRepository.save(catalogueItem).flatMap(item -> Mono.just(item.getId()));
+  }
 
-    public void updateCatalogueItem(Long id, CatalogueItem catalogueItem) throws ResourceNotFoundException{
+  public void updateCatalogueItem(Long id, CatalogueItem catalogueItem)
+      throws ResourceNotFoundException {
 
-        Mono<CatalogueItem> catalogueItemfromDB = getCatalogueItemById(id);
+    Mono<CatalogueItem> catalogueItemfromDB = getCatalogueItemById(id);
 
-        catalogueItemfromDB.subscribe(
-            value -> {
-                value.setName(catalogueItem.getName());
-                value.setDescription(catalogueItem.getDescription());
-                value.setPrice(catalogueItem.getPrice());
-                value.setInventory(catalogueItem.getInventory());
-                value.setUpdatedOn(Instant.now());
+    catalogueItemfromDB.subscribe(
+        value -> {
+          value.setName(catalogueItem.getName());
+          value.setDescription(catalogueItem.getDescription());
+          value.setPrice(catalogueItem.getPrice());
+          value.setInventory(catalogueItem.getInventory());
+          value.setUpdatedOn(Instant.now());
 
-                catalogueRepository
-                    .save(value)
-                    .subscribe();
-            });
-    }
+          catalogueRepository.save(value).subscribe();
+        });
+  }
 
-    public void deleteCatalogueItem(CatalogueItem catalogueItem) {
+  public void deleteCatalogueItem(CatalogueItem catalogueItem) {
 
-        // For delete to work as expected, we need to subscribe() for the flow to complete
-        catalogueRepository.delete(catalogueItem).subscribe();
-    }
+    // For delete to work as expected, we need to subscribe() for the flow to complete
+    catalogueRepository.delete(catalogueItem).subscribe();
+  }
 
-    private Mono<CatalogueItem> getCatalogueItemById(Long id) throws ResourceNotFoundException {
-        return catalogueRepository.findById(id)
-            .switchIfEmpty(Mono.defer(() -> Mono.error(new ResourceNotFoundException(
-                String.format("Catalogue Item not found for the provided id :: %s" , id)))));
-    }
-
+  private Mono<CatalogueItem> getCatalogueItemById(Long id) throws ResourceNotFoundException {
+    return catalogueRepository
+        .findById(id)
+        .switchIfEmpty(
+            Mono.defer(
+                () ->
+                    Mono.error(
+                        new ResourceNotFoundException(
+                            String.format(
+                                "Catalogue Item not found for the provided id :: %s", id)))));
+  }
 }

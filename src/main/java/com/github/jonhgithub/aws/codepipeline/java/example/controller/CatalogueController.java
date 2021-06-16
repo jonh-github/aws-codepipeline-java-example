@@ -32,106 +32,109 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/v1")
 public class CatalogueController {
 
-    static final String CREATE = "/";
-    static final String GET_ITEMS = "/";
-    static final String GET_ITEMS_STREAM = "/stream";
-    static final String GET_ITEM = "/{id}";
-    static final String UPDATE = "/{id}";
-    static final String DELETE = "/{id}";
-    
-    private final CatalogueCrudService catalogueCrudService;
+  static final String CREATE = "/";
+  static final String GET_ITEMS = "/";
+  static final String GET_ITEMS_STREAM = "/stream";
+  static final String GET_ITEM = "/{id}";
+  static final String UPDATE = "/{id}";
+  static final String DELETE = "/{id}";
 
-    public CatalogueController(CatalogueCrudService catalogueCrudService) {
-        this.catalogueCrudService = catalogueCrudService;
-    }
+  private final CatalogueCrudService catalogueCrudService;
 
-    /**
-     * Get Catalogue Items available in database
-     *
-     * @return catalogueItems
-     */
-    @GetMapping(GET_ITEMS)
-    @ResponseStatus(value = HttpStatus.OK)
-    public Flux<CatalogueItem> getCatalogueItems() {
-        return catalogueCrudService.getCatalogueItems();
-    }
+  public CatalogueController(CatalogueCrudService catalogueCrudService) {
+    this.catalogueCrudService = catalogueCrudService;
+  }
 
-    /**
-     * If api needs to push items as Streams to ensure Backpressure is applied, we need to set produces to MediaType.TEXT_EVENT_STREAM_VALUE
-     *
-     * MediaType.TEXT_EVENT_STREAM_VALUE  is the official media type for Server Sent Events (SSE)
-     * MediaType.APPLICATION_STREAM_JSON_VALUE is for server to server/http client communications.
-     *
-     * https://stackoverflow.com/questions/52098863/whats-the-difference-between-text-event-stream-and-application-streamjson
-     * @return catalogueItems
-     */
-    @GetMapping(path= GET_ITEMS_STREAM, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    @ResponseStatus(value = HttpStatus.OK)
-    public Flux<CatalogueItem> getCatalogueItemsStream() {
-        return catalogueCrudService
-                .getCatalogueItems()
-                .delayElements(Duration.ofMillis(200));
-    }
+  /**
+   * Get Catalogue Items available in database
+   *
+   * @return catalogueItems
+   */
+  @GetMapping(GET_ITEMS)
+  @ResponseStatus(value = HttpStatus.OK)
+  public Flux<CatalogueItem> getCatalogueItems() {
+    return catalogueCrudService.getCatalogueItems();
+  }
 
-    /**
-     * Get Catalogue Item
-     * @param id
-     * @return catalogueItem
-     * @throws ResourceNotFoundException
-     */
-    @GetMapping(GET_ITEM)
-    public Mono<CatalogueItem>
-        getCatalogueItem(@PathVariable(value = "id") Long id)
-            throws ResourceNotFoundException {
+  /**
+   * If api needs to push items as Streams to ensure Backpressure is applied, we need to set
+   * produces to MediaType.TEXT_EVENT_STREAM_VALUE
+   *
+   * <p>MediaType.TEXT_EVENT_STREAM_VALUE is the official media type for Server Sent Events (SSE)
+   * MediaType.APPLICATION_STREAM_JSON_VALUE is for server to server/http client communications.
+   *
+   * <p>https://stackoverflow.com/questions/52098863/whats-the-difference-between-text-event-stream-and-application-streamjson
+   *
+   * @return catalogueItems
+   */
+  @GetMapping(path = GET_ITEMS_STREAM, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+  @ResponseStatus(value = HttpStatus.OK)
+  public Flux<CatalogueItem> getCatalogueItemsStream() {
+    return catalogueCrudService.getCatalogueItems().delayElements(Duration.ofMillis(200));
+  }
 
-        return catalogueCrudService.getCatalogueItem(id);
-    }
+  /**
+   * Get Catalogue Item
+   *
+   * @param id
+   * @return catalogueItem
+   * @throws ResourceNotFoundException
+   */
+  @GetMapping(GET_ITEM)
+  public Mono<CatalogueItem> getCatalogueItem(@PathVariable(value = "id") Long id)
+      throws ResourceNotFoundException {
 
-    /**
-     * Create Catalogue Item
-     * @param catalogueItem
-     * @return id of created CatalogueItem
-     */
-    @PostMapping(CREATE)
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public Mono<ResponseEntity> addCatalogueItem(@Valid @RequestBody CatalogueItem catalogueItem) {
+    return catalogueCrudService.getCatalogueItem(id);
+  }
 
-        Mono<Long> id = catalogueCrudService.addCatalogItem(catalogueItem);
+  /**
+   * Create Catalogue Item
+   *
+   * @param catalogueItem
+   * @return id of created CatalogueItem
+   */
+  @PostMapping(CREATE)
+  @ResponseStatus(value = HttpStatus.CREATED)
+  public Mono<ResponseEntity> addCatalogueItem(@Valid @RequestBody CatalogueItem catalogueItem) {
 
-        return id.map(value -> ResponseEntity.status(HttpStatus.CREATED).body(new ResourceIdentity(value))).cast(ResponseEntity.class);
-    }
+    Mono<Long> id = catalogueCrudService.addCatalogItem(catalogueItem);
 
-    /**
-     * Update Catalogue Item
-     * @param skuNumber
-     * @param catalogueItem
-     * @throws ResourceNotFoundException
-     */
-    @PutMapping(UPDATE)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void updateCatalogueItem(
-        @PathVariable(value = "id") Long id,
-        @Valid @RequestBody CatalogueItem catalogueItem) throws ResourceNotFoundException {
+    return id.map(
+            value -> ResponseEntity.status(HttpStatus.CREATED).body(new ResourceIdentity(value)))
+        .cast(ResponseEntity.class);
+  }
 
-        catalogueCrudService.updateCatalogueItem(id, catalogueItem);
-    }
+  /**
+   * Update Catalogue Item
+   *
+   * @param skuNumber
+   * @param catalogueItem
+   * @throws ResourceNotFoundException
+   */
+  @PutMapping(UPDATE)
+  @ResponseStatus(value = HttpStatus.OK)
+  public void updateCatalogueItem(
+      @PathVariable(value = "id") Long id, @Valid @RequestBody CatalogueItem catalogueItem)
+      throws ResourceNotFoundException {
 
-    /**
-     * Delete Catalogue Item
-     * @param id
-     * @throws ResourceNotFoundException
-     */
-    @DeleteMapping(DELETE)
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void removeCatalogItem(@PathVariable(value = "id") Long id)
-        throws ResourceNotFoundException {
+    catalogueCrudService.updateCatalogueItem(id, catalogueItem);
+  }
 
-        Mono<CatalogueItem> catalogueItem = catalogueCrudService.getCatalogueItem(id);
-        catalogueItem.subscribe(
-            value -> {
-                catalogueCrudService.deleteCatalogueItem(value);
-            }
-        );
-    }
+  /**
+   * Delete Catalogue Item
+   *
+   * @param id
+   * @throws ResourceNotFoundException
+   */
+  @DeleteMapping(DELETE)
+  @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  public void removeCatalogItem(@PathVariable(value = "id") Long id)
+      throws ResourceNotFoundException {
 
+    Mono<CatalogueItem> catalogueItem = catalogueCrudService.getCatalogueItem(id);
+    catalogueItem.subscribe(
+        value -> {
+          catalogueCrudService.deleteCatalogueItem(value);
+        });
+  }
 }

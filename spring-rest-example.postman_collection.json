@@ -17,12 +17,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/actuator/health",
+					"raw": "http://{{hostname}}:{{port}}/actuator/health",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"actuator",
 						"health"
@@ -43,12 +43,12 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8080/actuator/info",
+					"raw": "http://{{hostname}}:{{port}}/actuator/info",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"actuator",
 						"info"
@@ -63,12 +63,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/actuator/metrics/",
+					"raw": "http://{{hostname}}:{{port}}/actuator/metrics/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"actuator",
 						"metrics",
@@ -84,12 +84,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/actuator/metrics/jvm.memory.used",
+					"raw": "http://{{hostname}}:{{port}}/actuator/metrics/jvm.memory.used",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"actuator",
 						"metrics",
@@ -121,12 +121,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",
@@ -142,12 +142,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",
@@ -179,12 +179,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/1001",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/1001",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",
@@ -200,12 +200,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/1001",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/1001",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",
@@ -221,12 +221,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/1001",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/1001",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",
@@ -242,12 +242,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/9999",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/9999",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",
@@ -279,12 +279,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",
@@ -316,12 +316,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/",
+					"raw": "http://{{hostname}}:{{port}}/api/v1/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{hostname}}"
 					],
-					"port": "8080",
+					"port": "{{port}}",
 					"path": [
 						"api",
 						"v1",

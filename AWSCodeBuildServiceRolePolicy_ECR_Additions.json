@@ -1,0 +1,15 @@
+{
+  "Action": [
+    "ecr:BatchCheckLayerAvailability",
+    "ecr:GetDownloadUrlForLayer",
+    "ecr:BatchGetImage",
+    "ecr:DescribeImages",
+    "ecr:CompleteLayerUpload",
+    "ecr:GetAuthorizationToken",
+    "ecr:InitiateLayerUpload",
+    "ecr:PutImage",
+    "ecr:UploadLayerPart"
+  ],
+  "Resource": "*",
+  "Effect": "Allow"
+}

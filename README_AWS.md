@@ -1,4 +1,4 @@
-#  AWS CodePipeline from GitHub to ECS setup
+#  AWS CodePipeline from GitHub to ECS Setup
 
 ## Summary
 
@@ -43,7 +43,7 @@ The image name is: `spring-rest-example` which matches the pom.xml's artifactId.
 - Click on the top right Fork button to fork your own copy under your GitHub account
 - git clone the forked copy to your local machine
 - Ensure you are on the GitHub branch: `main`
-- Build the Java jar: `mvn clean install`
+- Build the Java jar: `./mvnw clean install`
 - Build a local docker image using the existing Dockerfile: `docker build --tag=spring-rest-example:latest .`
 - Run the docker image: `docker run -it -p8080:8080 spring-rest-example:latest`
 - Test the application docker image, GET `http://localhost:8080/actuator/health` should return `{"status":"UP"}`

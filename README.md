@@ -69,6 +69,20 @@ In a terminal window in the project directory, to build just run:
 
 `./mvnw clean install`
 
+The project uses the Maven [spotless](https://github.com/diffplug/spotless) plugin to apply [Google's Java Style Guide](https://google.github.io/styleguide/javaguide.html) to the code.
+
+The build will fail if the code does not match Google's Java Style Guide.
+
+If you wish to tidy the style on code edits to pass building, run: `./mvnw spotless:apply`
+
+The project uses the Maven [JaCoCo](https://www.jacoco.org/jacoco/) plugin to ensure tests cover 95% of the code base.
+
+The build will fail if the test coverage drops below 95%.
+
+After a build, to see the results of coverage and find missing code blocks, open:
+
+[target/site/jacoco/index.html](target/site/jacoco/index.html)
+
 ### Docker build and run
 
 - Build a docker image using the Dockerfile: `docker build --tag=spring-rest-example:latest .`

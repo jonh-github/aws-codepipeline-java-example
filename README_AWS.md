@@ -83,7 +83,7 @@ The Dockerfile in this project pulls the `amazoncorretto:11-alpine-jdk` image ho
 
 Unfortunately, Docker Hub have introduced rate limits for anonymous pulls, so the builds will intermittently fail.
 
-See AWS's [docker hib rate limit advice](https://aws.amazon.com/blogs/containers/advice-for-customers-dealing-with-docker-hub-rate-limits-and-a-coming-soon-announcement/)
+See AWS's [Docker Hub rate limit advice](https://aws.amazon.com/blogs/containers/advice-for-customers-dealing-with-docker-hub-rate-limits-and-a-coming-soon-announcement/).
 
 To remedy this, copy the image and push it to ECR:
 
@@ -94,8 +94,8 @@ To remedy this, copy the image and push it to ECR:
 
 ## Create ECS Task Definition, Service & Cluster to deploy the docker image from ECR
 
-These steps follow [getting-started-fargate](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/getting-started-fargate.html)
-with specifics to this application given below:
+These steps follow AmazonECS [getting-started-fargate](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/getting-started-fargate.html)
+with the specifics to this application given below.
 
 For simplicity use the same name `spring-rest-example` for task, service and cluster name.
 
@@ -146,7 +146,7 @@ Finally at `Step 4: Review` - review your settings and click Create Service butt
 
 Navigate to the `spring-rest-example` ECS service via the web UI.
 
-From Clusters, choose cluster: `spring-rest-example`.
+From Clusters, choose cluster: `spring-rest-example`
 
 In the service table, choose: `spring-rest-example`
 
@@ -248,6 +248,6 @@ Click on retry of the Build stage and the pipeline should succeed.
 
 ## AWS's buildspec.yml
 
-The configuration of AWS CodeBuild is detailed in the `buildspec.yml` in the source repository.
+The configuration of AWS CodeBuild is detailed in the [buildspec.yml](buildspec.yml) in the source repository.
 
 For further details see AWS's [build-spec-ref](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)

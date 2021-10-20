@@ -3,6 +3,9 @@
 ## Summary
 
 An example spring-boot reactive(WebFlux) microservice example which provides a simple RESTful API.
+
+To view and test the RESTful API, open: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
 The RESTful API is to a single resource: CatalogueItem and supports:
 
 ```

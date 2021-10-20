@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.5.1</version>
+    <version>2.5.5</version>
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>com.github.jonhgithub.aws.codepipeline.java</groupId>
@@ -16,9 +16,9 @@
 
   <properties>
     <java.version>11</java.version>
-    <snakeyaml.version>1.29</snakeyaml.version>
-    <spotless.plugin.version>2.12.0</spotless.plugin.version>
-    <google-java-format.version>1.10.0</google-java-format.version>
+    <springdoc.version>1.5.11</springdoc.version>
+    <spotless.plugin.version>2.17.2</spotless.plugin.version>
+    <google-java-format.version>1.11.0</google-java-format.version>
     <jacoco.plugin.version>0.8.7</jacoco.plugin.version>
   </properties>
 
@@ -40,10 +40,10 @@
       <artifactId>spring-boot-starter-webflux</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-aop</artifactId>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-webflux-ui</artifactId>
+      <version>${springdoc.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
@@ -64,11 +64,6 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.yaml</groupId>
-      <artifactId>snakeyaml</artifactId>
-      <version>${snakeyaml.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
